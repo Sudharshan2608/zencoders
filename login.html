@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareBot - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="pics/cletter.png">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            background: #fff;
+            color: #111;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 6%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-weight: 700; font-size: 1.6rem; color: #007aff; user-select: none; }
+        nav a { margin: 0 20px; font-weight: 600; color: #444; transition: color 0.3s ease; }
+        nav a:hover { color: #007aff; }
+        .header-btns a {
+            margin-left: 20px; padding: 8px 18px; border-radius: 25px; font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .login { color: #007aff; border: 2px solid #007aff; background: transparent; }
+        .login:hover { background: #007aff; color: white; }
+        .cta { background: #007aff; color: #fff; border: none; }
+        .cta:hover { background: #005bb5; }
+
+        .login-section {
+            display: flex; justify-content: center; align-items: center;
+            padding: 60px 6%; background: #f4f8ff;
+            min-height: calc(100vh - 180px);
+        }
+        .login-card {
+            background: white; padding: 40px 30px; border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+            width: 100%; max-width: 400px;
+        }
+        .login-card h2 { text-align: center; margin-bottom: 25px; color: #003974; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; }
+        input {
+            width: 100%; padding: 12px 14px; border-radius: 8px;
+            border: 1px solid #ccc; font-size: 1rem;
+        }
+        input:focus { outline: none; border-color: #007aff; }
+        .btn-primary {
+            display: inline-block; background: #007aff; color: white;
+            padding: 14px 0; font-size: 1.1rem; border-radius: 30px;
+            text-align: center; width: 100%; border: none; cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn-primary:hover { background: #005bb5; }
+        .form-footer { text-align: center; margin-top: 15px; font-size: 0.95rem; }
+        .form-footer a { color: #007aff; font-weight: 600; }
+
+        footer {
+            background: #0b2d5a; color: white; padding: 40px 6%; font-size: 0.9rem;
+        }
+        .footer-top {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .footer-logo { font-size: 1.6rem; font-weight: 700; color: #65a2ff; }
+        .footer-logo span { font-weight: 300; color: #d3e0ff; }
+        .socials a {
+            margin-left: 15px; color: white; font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .socials a:hover { color: #65a2ff; }
+        .footer-links {
+            display: flex; justify-content: space-between; margin-top: 40px;
+            flex-wrap: wrap; gap: 30px;
+        }
+        .footer-links h4 { font-weight: 700; margin-bottom: 18px; color: #a8bce8; }
+        .footer-links a {
+            display: block; margin-bottom: 12px; color: white; font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover { color: #65a2ff; }
+        .footer-note {
+            text-align: center; margin-top: 30px; font-size: 0.85rem; color: #a2b7ff;
+        }
+        @media (max-width: 600px) {
+            .login-card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><span style="color: #0000ff;">CareBot</span></div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="case.html">Case Studies</a>
+            <a href="doctor.html">Doctor Chat</a>
+            <a href="symptom-checker.html">Symptom Checker</a>
+        </nav>
+        <div class="header-btns">
+            <a href="login.html" class="login">LOG IN</a>
+            <a href="signup.html" class="cta">Sign Up</a>
+        </div>
+    </header>
+
+    <section class="login-section">
+        <div class="login-card">
+            <h2>Log in to CareBot</h2>
+            <form onsubmit="loginUser(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required />
+                </div>
+                <button type="submit" class="btn-primary">Log In</button>
+                <div class="form-footer">
+                    Don't have an account? <a href="signup.html">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-logo"><span>CareBot</span></div>
+            <div class="socials">
+                <a href="#">IG</a>
+                <a href="#">LI</a>
+                <a href="#">FB</a>
+                <a href="#">YT</a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Programs</h4>
+                <a href="#">Primary Care</a>
+                <a href="#">Weight Management</a>
+                <a href="#">Mental Health</a>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <a href="#">Medical Team</a>
+                <a href="symptom-checker.html">Symptom Checker</a>
+                <a href="doctor.html">Doctor Chat</a>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+        <p class="footer-note">©2025 CareBot. All rights reserved.</p>
+    </footer>
+
+    <script>
+    async function loginUser(e) {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const res = await fetch("http://127.0.0.1:8000/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alert(data.message || "Login successful!");
+            window.location.href = "index.html"; // redirect after login
+        } else {
+            alert(data.detail || "Login failed");
+        }
+    }
+    </script>
+</body>
+</html>

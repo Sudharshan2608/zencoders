@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareBot - AI Powered Primary Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="pics/cletter.png">
+
+
+    <style>
+        /* Global Reset & Defaults */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            background: #fff;
+            color: #111;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #007aff;
+            user-select: none;
+        }
+        .logo span {
+            font-weight: 300;
+            color: #333;
+        }
+        nav a {
+            margin: 0 20px;
+            font-weight: 600;
+            color: #444;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #007aff;
+        }
+        .header-btns a {
+            margin-left: 20px;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .login {
+            color: #007aff;
+            border: 2px solid #007aff;
+            background: transparent;
+        }
+        .login:hover {
+            background: #007aff;
+            color: white;
+        }
+        .cta {
+            background: #007aff;
+            color: #fff;
+            border: none;
+        }
+        .cta:hover {
+            background: #005bb5;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 80px 6%;
+            background: #f4f8ff;
+            gap: 40px;
+        }
+        .hero-text {
+            flex: 1 1 400px;
+        }
+        .hero-text h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #071c4d;
+            margin: 0 0 25px;
+            line-height: 1.2;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: #007aff;
+            color: white;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: background 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #005bb5;
+        }
+        .hero-img {
+            flex: 1 1 400px;
+            display: flex;
+            justify-content: center;
+        }
+        .hero-img img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Partners Section */
+        .partners {
+            text-align: center;
+            padding: 60px 6% 40px;
+        }
+        .partners h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #071c4d;
+        }
+        .partners p {
+            font-size: 1.15rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .partner-logos img {
+            height: 40px;
+            filter: grayscale(100%);
+            opacity: 0.6;
+        }
+        .features-section {
+            padding: 60px 6%;
+            background: #fff;
+        }
+        .features-section h2 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: #f8faff;
+            border: 1px solid #e0e8f0;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .feature-card h3 {
+            color: #071c4d;
+            font-size: 1.4rem;
+        }
+        footer {
+            background: #0b2d5a;
+            color: white;
+            padding: 40px 6%;
+            font-size: 0.9rem;
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #65a2ff;
+            user-select: none;
+        }
+        .footer-logo span {
+            font-weight: 300;
+            color: #d3e0ff;
+        }
+        .socials a {
+            margin-left: 15px;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .socials a:first-child {
+            margin-left: 0;
+        }
+        .socials a:hover {
+            color: #65a2ff;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .footer-links div {
+            min-width: 140px;
+        }
+        .footer-links h4 {
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #a8bce8;
+        }
+        .footer-links a {
+            display: block;
+            margin-bottom: 12px;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #65a2ff;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #a2b7ff;
+        }
+        /* Media Queries */
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav {
+                margin-top: 15px;
+                order: 1;
+            }
+            .header-btns {
+                margin-top: 15px;
+                order: 2;
+            }
+            .hero {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Care<span>Bot</span></div>
+        <nav>
+            <a href="#">For Patients</a>
+            <a href="case.html">Case Studies</a>
+            <a href="doctor.html">Doctor Chat</a>
+            <a href="symptom-checker.html">Symptom Checker</a>
+        </nav>
+        <div class="header-btns">
+            <a href="#" class="login">Log In</a>
+            <a href="contact.html" class="cta">Contact</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Healthcare at Your Fingertips.</h1>
+            <p>Experience the future of primary care with CareBot. Our AI-powered platform provides personalized, on-demand health insights and connects you to real doctors 24/7.</p>
+            <a href="#" class="btn-primary">Get Started</a>
+        </div>
+        <div class="hero-img">
+            <img src="pics/doctor-talking-to-patient.png" alt="Doctor talking to a patient on a screen" />
+        </div>
+    </section>
+    
+    <section class="partners">
+        <h2>Trusted by Leading Institutions</h2>
+        <p>Our technology is backed by partnerships with top universities and health systems to ensure safety and effectiveness.</p>
+        <div class="partner-logos">
+            <img src="pics/ieee.png" alt="IEEE logo" />
+            <img src="pics/mit.png" alt="MIT logo" />
+            <img src="pics/stanford.png" alt="Stanford logo" />
+            <img src="pics/mayo-clinic.png" alt="Mayo Clinic logo" />
+        </div>
+    </section>
+
+    <section class="features-section">
+        <h2>Why Choose CareBot?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <img src="pics/ai-icon.png" alt="AI brain icon" style="height:50px; margin-bottom: 20px;" />
+                <h3>AI-Powered Insights</h3>
+                <p>Our advanced AI helps you understand your symptoms and potential health concerns instantly.</p>
+            </div>
+            <div class="feature-card">
+                <img src="pics/chat-icon.png" alt="Chat icon" style="height:50px; margin-bottom: 20px;" />
+                <h3>24/7 Doctor Chat</h3>
+                <p>Connect with a licensed medical professional via text chat anytime, from the comfort of your home.</p>
+            </div>
+            <div class="feature-card">
+                <img src="pics/medical-records-icon.png" alt="Medical records icon" style="height:50px; margin-bottom: 20px;" />
+                <h3>Personalized Care</h3>
+                <p>Receive tailored treatment plans and prescriptions based on your unique health profile.</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-logo">Care<span>Bot</span></div>
+            <div class="socials" aria-label="Social media links">
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="#" aria-label="LinkedIn">LI</a>
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="YouTube">YT</a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Programs</h4>
+                <a href="#">Primary Care</a>
+                <a href="#">Weight Management</a>
+                <a href="#">Mental Health</a>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <a href="#">Medical Team</a>
+                <a href="symptom-checker.html">Symptom Checker</a>
+                <a href="doctor.html">Doctor Chat</a>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            
+        </div>
+        <p class="footer-note">©2025 CareBot. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

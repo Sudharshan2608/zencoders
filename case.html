@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI in Healthcare – IEEE Case Studies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="pics/cletter.png">
+  <style>
+    :root{
+      --brand:#0a66ff; /* IEEE-ish blue vibe */
+      --ink:#0f172a;
+      --muted:#475569;
+      --bg:#f8fbff;
+      --card:#ffffff;
+      --accent:#0b2d5a;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; font-family:'Inter',system-ui,Arial,sans-serif; color:var(--ink); background:#fff; }
+    a{ color:inherit; text-decoration:none; }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px clamp(16px,5vw,64px);
+      background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.06);
+    }
+    .brand{ font-weight:700; letter-spacing:.2px; color:var(--brand); font-size:1.25rem; }
+    .brand span{ font-weight:400; color:#334155; }
+    nav a{ margin:0 14px; font-weight:600; color:#334155; }
+    nav a:hover{ color:var(--brand); }
+    .cta{ display:inline-block; padding:10px 16px; border-radius:999px; background:var(--brand); color:#fff; font-weight:700; }
+
+    /* Hero */
+    .hero{ display:grid; grid-template-columns:1.2fr .8fr; gap:36px; align-items:center; padding:64px clamp(16px,5vw,64px); background:var(--bg); }
+    .hero h1{ margin:0 0 12px; font-weight:800; line-height:1.15; font-size:clamp(1.6rem,3vw,2.2rem); color:#0b1b3a; }
+    .hero p{ margin:0 0 20px; color:var(--muted); font-size:1.05rem; }
+    .hero .actions{ display:flex; gap:12px; flex-wrap:wrap; }
+    .btn{ display:inline-block; padding:12px 18px; border-radius:12px; font-weight:700; }
+    .btn.primary{ background:var(--brand); color:#fff; }
+    .btn.ghost{ border:2px solid var(--brand); color:var(--brand); }
+    .hero-visual{ display:flex; justify-content:center; }
+    .hero-visual img{ max-width:100%; height:auto; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,.12); }
+
+    /* Case Study Card */
+    .wrap{ padding:56px clamp(16px,5vw,64px); }
+    .section-title{ font-size:1.6rem; font-weight:800; color:#0b1b3a; margin:0 0 18px; }
+    .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:22px; }
+    .card{ grid-column: span 12; background:var(--card); border-radius:16px; box-shadow:0 8px 28px rgba(2,6,23,.06); overflow:hidden; border:1px solid rgba(2,6,23,.06); }
+    .card-head{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; align-items:center; padding:22px 22px 0; }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:#eef4ff; color:#1e3a8a; font-weight:700; font-size:.85rem; }
+    .study-title{ font-weight:800; font-size:1.25rem; margin:10px 22px 6px; color:#0b1b3a; }
+    .byline{ margin:0 22px 14px; color:var(--muted); font-size:.98rem; }
+    .meta{ margin:0 22px 18px; color:#0b1b3a; font-weight:600; display:flex; flex-wrap:wrap; gap:12px; }
+    .meta .tag{ background:#f1f5f9; padding:6px 10px; border-radius:999px; font-size:.85rem; font-weight:700; color:#0b1b3a; }
+
+    .content{ display:grid; grid-template-columns:1.2fr .8fr; gap:22px; padding:0 22px 22px; }
+    .highlights{ background:#f8fafc; border:1px solid #e2e8f0; padding:18px; border-radius:12px; }
+    .highlights h4{ margin:0 0 10px; font-size:1rem; color:#0b1b3a; }
+    .highlights ul{ margin:0; padding-left:18px; color:#0f172a; }
+
+    /* Simple CSS Bar Chart */
+    .chart{ background:#f8fafc; border:1px solid #e2e8f0; padding:16px; border-radius:12px; }
+    .chart h4{ margin:0 0 10px; font-size:1rem; color:#0b1b3a; }
+    .bar{ display:flex; align-items:center; gap:10px; margin:10px 0; }
+    .bar .label{ width:180px; font-weight:700; color:#0f172a; }
+    .bar .track{ flex:1; height:14px; background:#e2e8f0; border-radius:999px; overflow:hidden; }
+    .bar .fill{ height:100%; width:0; background:var(--brand); border-radius:999px; transition:width .8s ease; }
+    .bar .val{ width:48px; text-align:right; font-weight:700; color:#0b1b3a; }
+
+    .go{ display:inline-flex; align-items:center; gap:8px; font-weight:800; color:#0b1b3a; }
+    .go a{ color:var(--brand); font-weight:800; text-decoration:underline; }
+
+    /* News strip */
+    .news{ margin-top:14px; border-top:1px dashed #e2e8f0; padding-top:14px; display:grid; gap:10px; }
+    .news-item{ display:flex; align-items:center; gap:10px; padding:10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; }
+    .badge{ font-size:.75rem; font-weight:800; padding:4px 8px; border-radius:999px; background:#e0ecff; color:#113b8f; }
+
+    /* Footer pager */
+    .pager{ display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding:16px 22px 22px; }
+    .pager a{ font-weight:800; color:var(--brand); text-decoration:underline; }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{ grid-template-columns:1fr; }
+      .content{ grid-template-columns:1fr; }
+      .bar .label{ width:140px; }
+    }
+    footer {
+            background: #0b2d5a;
+            color: white;
+            padding: 40px 6%;
+            font-size: 0.9rem;
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #65a2ff;
+            user-select: none;
+        }
+        .footer-logo span {
+            font-weight: 300;
+            color: #d3e0ff;
+        }
+        .socials a {
+            margin-left: 15px;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .socials a:first-child {
+            margin-left: 0;
+        }
+        .socials a:hover {
+            color: #65a2ff;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .footer-links div {
+            min-width: 140px;
+        }
+        .footer-links h4 {
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #a8bce8;
+        }
+        .footer-links a {
+            display: block;
+            margin-bottom: 12px;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #65a2ff;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #a2b7ff;
+        }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><span style="color: #0000ff;">CareBot</span></div>
+    <nav>
+            <a href="#">For Patients</a>
+            <a href="case.html">Case Studies</a>
+            <a href="doctor.html">Doctor Chat</a>
+            <a href="symptom-checker.html">Symptom Checker</a>
+        </nav>
+        <a class="cta" href="contact.html" role="button">Contact</a>
+  </header>
+
+  <section class="hero" aria-label="Intro">
+    <div>
+      <h1>AI in Healthcare — Case Studies</h1>
+      <p>Artificial Intelligence is revolutionizing healthcare by improving diagnosis, treatment, and patient outcomes. Case studies reveal AI’s role in early disease detection, medical imaging analysis, drug discovery, and personalized medicine. From predicting patient deterioration to optimizing hospital workflows, AI-driven solutions demonstrate remarkable potential in enhancing efficiency, accuracy, and overall care quality.</p>
+    </div>
+    <div class="hero-visual">
+      <img src="pics/doctor.png" alt="Abstract AI healthcare visualization" />
+    </div>
+  </section>
+
+  <main class="wrap">
+    <h2 class="section-title" id="case1">Style Case Studies</h2>
+    <div class="grid">
+
+      <!-- Case Study A -->
+      <article class="card" aria-labelledby="title-a">
+        <div class="card-head">
+          <span class="pill" aria-label="Case Study Label">CASE STUDY</span>
+        </div>
+        <h3 class="study-title" id="title-a">AI‑Assisted Triage for Chest Pain in Virtual Care</h3>
+        <p class="byline">Researchers: <strong>J. Doe</strong> (University A), <strong>R. Smith</strong> (Institute B), <strong>M. Lee</strong> (Hospital C)</p>
+        <p class="meta"><span class="tag">Journal / 2025</span><span class="tag">Clinical AI</span><span class="tag">Virtual Urgent Care</span></p>
+
+        <div class="content">
+          <section class="highlights" aria-label="Study A Highlights">
+            <h4>Study Highlights</h4>
+            <ul>
+              <li>Objective: compare AI guidance vs. final physician recommendations for standardized chest‑pain presentations.</li>
+              <li>Population: U.S. virtual urgent‑care physicians; video vignette cases.</li>
+              <li>Outcome: accuracy and safety signals (red‑flag capture, guideline adherence).</li>
+            </ul>
+            <p class="go">STUDY HIGHLIGHTS PRESENTED BY CO‑AUTHORS: <strong>Jane Doe, M.D.</strong> and <strong>R. Smith, Ph.D.</strong></p>
+          </section>
+
+          <aside class="chart" aria-label="Comparison chart for Study A">
+            <h4>Comparison of Initial AI and Final Physician Recommendations</h4>
+            <div class="bar" aria-label="Equal rating">
+              <div class="label">AI and Physicians Rated Equal</div>
+              <div class="track"><div class="fill" style="width:68%"></div></div>
+              <div class="val">68%</div>
+            </div>
+            <div class="bar" aria-label="AI rated better">
+              <div class="label">AI Rated Better</div>
+              <div class="track"><div class="fill" style="width:21%"></div></div>
+              <div class="val">69%</div>
+            </div>
+            <div class="bar" aria-label="Physicians rated better">
+              <div class="label">Physicians Rated Better</div>
+              <div class="track"><div class="fill" style="width:11%"></div></div>
+              <div class="val">11%</div>
+            </div>
+            <ul>
+              <li><strong>AI advantages:</strong> guideline adherence, red‑flag capture, EHR signal use</li>
+              <li><strong>Physician advantages:</strong> physical‑exam cross‑references, fewer unnecessary referrals</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="pager" aria-label="Pager">
+          <span>Next</span>
+          <a href="#case-b">Proceed to Case Study B →</a>
+        </div>
+      </article>
+
+      <!-- Case Study B -->
+      <article class="card" id="case-b" aria-labelledby="title-b">
+        <div class="card-head">
+          <span class="pill">CASE STUDY</span>
+          <a class="cta" href="#" target="_blank" rel="noopener" aria-label="Go to study B"></a>
+        </div>
+        <h3 class="study-title" id="title-b">Autonomous Multi‑Agent AI vs. Board‑Certified Clinicians</h3>
+        <p class="byline">Researchers: <strong>A. Kumar</strong> (Tech Univ), <strong>S. Nguyen</strong> (Health Lab), <strong>L. Park</strong> (Med Center)</p>
+        <p class="meta"><span class="tag">IEEE Conference / 2025</span><span class="tag">Agentic AI</span><span class="tag">Telehealth</span></p>
+
+        <div class="content">
+          <section class="highlights" aria-label="Study B Highlights">
+            <h4>Study Highlights</h4>
+            <ul>
+              <li>Objective: benchmark autonomous agentic AI against clinicians on diagnostic and treatment concordance.</li>
+              <li>Population: retrospective sample of real telehealth urgent‑care encounters.</li>
+              <li>Outcome: diagnostic match rate, plan alignment, expert adjudication of discordant cases.</li>
+            </ul>
+            <p class="go">STUDY HIGHLIGHTS PRESENTED BY CO‑AUTHORS: <strong>A. Kumar</strong> and <strong>S. Nguyen</strong></p>
+          </section>
+
+          <aside class="chart" aria-label="Comparison chart for Study B">
+            <h4>Comparison of AI vs. Physician Outcomes</h4>
+            <div class="bar" aria-label="Equal rating">
+              <div class="label">AI and Physicians Rated Equal</div>
+              <div class="track"><div class="fill" style="width:64%"></div></div>
+              <div class="val">64%</div>
+            </div>
+            <div class="bar" aria-label="AI rated better">
+              <div class="label">AI Rated Better</div>
+              <div class="track"><div class="fill" style="width:24%"></div></div>
+              <div class="val">24%</div>
+            </div>
+            <div class="bar" aria-label="Physicians rated better">
+              <div class="label">Physicians Rated Better</div>
+              <div class="track"><div class="fill" style="width:12%"></div></div>
+              <div class="val">12%</div>
+            </div>
+            <ul>
+              <li><strong>AI strengths:</strong> documentation consistency, adverse‑event screening, protocolized follow‑ups</li>
+              <li><strong>Clinician strengths:</strong> nuanced physical‑sign synthesis, social context integration</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="pager" aria-label="Pager">
+          <a href="#case1">← Back to Case Study A</a>
+          <span></span>
+        </div>
+      </article>
+
+      <!-- Founders Letter style block (optional) -->
+      <article class="card" aria-labelledby="founders-title">
+        <div class="card-head">
+          <span class="pill">LETTER</span>
+        </div>
+        <h3 class="study-title" id="founders-title">Letter from the Program Leads</h3>
+        <p class="byline">ALLON BLOCH AND RAN SHAUL (Example formatting)</p>
+        <div class="content">
+          <section class="highlights" aria-label="Letter">
+            <p>We believe AI augments clinicians with superpowers—improving consistency, surfacing red flags, and extending access while preserving clinician judgment where it matters most. These case studies illustrate pragmatic pathways to safe adoption across health systems.</p>
+          </section>
+        </div>
+      </article>
+
+      <!-- News Section -->
+      <article class="card" id="news" aria-labelledby="news-title">
+        <div class="card-head">
+          <span class="pill">NEWS</span>
+        </div>
+        <h3 class="study-title" id="news-title">News & Assets</h3>
+        <div class="content" style="grid-template-columns:1fr;">
+          <div class="news">
+            <div class="news-item"><span class="badge">News</span> <span>IEEE Symposium Recap: Clinical AI Benchmarking 2025</span></div>
+            <div class="news-item"><span class="badge">News</span> <span>Panel: The future of healthcare is here</span></div>
+            <div class="news-item"><span class="badge">Asset</span> <span>Press Kit: AI in Virtual Care (doc)</span></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  <script>
+    // Animate bars on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.fill').forEach((el) => {
+        const target = el.style.width; // already set inline
+        el.style.width = '0';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { el.style.width = target; });
+        });
+      });
+    });
+  </script>
+  <footer>
+        <div class="footer-top">
+            <div class="footer-logo"><span>CareBot</span></div>
+            <div class="socials" aria-label="Social media links">
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="#" aria-label="LinkedIn">LI</a>
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="YouTube">YT</a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Programs</h4>
+                <a href="#">Primary Care</a>
+                <a href="#">Weight Management</a>
+                <a href="#">Mental Health</a>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <a href="#">Medical Team</a>
+                <a href="symptom-checker.html">Symptom Checker</a>
+                <a href="doctor.html">Doctor Chat</a>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            
+        </div>
+        <p class="footer-note">©2025 CareBot. All rights reserved.</p>
+    </footer>
+</body>
+</html>

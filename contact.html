@@ -1,0 +1,189 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - AI in Healthcare</title>
+    <link rel="icon" type="image/png" href="pics/cletter.png"> <!-- Your tab icon -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f9ff;
+        }
+        header {
+            background: #0b2d5a;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #444;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: rgb(38, 38, 236);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            margin-top: 30px;
+        }
+        footer {
+            background: #0b2d5a;
+            color: white;
+            padding: 40px 6%;
+            font-size: 0.9rem;
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #65a2ff;
+            user-select: none;
+        }
+        .footer-logo span {
+            font-weight: 300;
+            color: #d3e0ff;
+        }
+        .socials a {
+            margin-left: 15px;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .socials a:first-child {
+            margin-left: 0;
+        }
+        .socials a:hover {
+            color: #65a2ff;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .footer-links div {
+            min-width: 140px;
+        }
+        .footer-links h4 {
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #a8bce8;
+        }
+        .footer-links a {
+            display: block;
+            margin-bottom: 12px;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #65a2ff;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #a2b7ff;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Contact Us</h1>
+</header>
+
+<div class="container">
+    <h2>We’d love to hear from you</h2>
+    <form>
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Write your message" rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+
+<footer>
+        <div class="footer-top">
+            <div class="footer-logo"><span>CareBot</span></div>
+            <div class="socials" aria-label="Social media links">
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="#" aria-label="LinkedIn">LI</a>
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="YouTube">YT</a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Programs</h4>
+                <a href="#">Primary Care</a>
+                <a href="#">Weight Management</a>
+                <a href="#">Mental Health</a>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <a href="#">Medical Team</a>
+                <a href="#">Symptom Checker</a>
+                <a href="doctor.html">Doctor Chat</a>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            
+        </div>
+        <p class="footer-note">©2025 CareBot. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

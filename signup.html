@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareBot - Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="pics/cletter.png">
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background: #fff; color: #111; }
+        a { text-decoration: none; color: inherit; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 6%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .logo { font-weight: 700; font-size: 1.6rem; color: #007aff; }
+        nav a { margin: 0 20px; font-weight: 600; color: #444; }
+        nav a:hover { color: #007aff; }
+        .header-btns a { margin-left: 20px; padding: 8px 18px; border-radius: 25px; font-weight: 600; }
+        .login { color: #007aff; border: 2px solid #007aff; background: transparent; }
+        .login:hover { background: #007aff; color: white; }
+        .cta { background: #007aff; color: #fff; }
+        .cta:hover { background: #005bb5; }
+        .signup-section { display: flex; justify-content: center; align-items: center; padding: 60px 6%; background: #f4f8ff; min-height: calc(100vh - 180px); }
+        .signup-card { background: white; padding: 40px 30px; border-radius: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); width: 100%; max-width: 450px; }
+        .signup-card h2 { text-align: center; margin-bottom: 25px; color: #003974; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; }
+        input { width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
+        input:focus { outline: none; border-color: #007aff; }
+        .btn-primary { display: inline-block; background: #007aff; color: white; padding: 14px 0; font-size: 1.1rem; border-radius: 30px; text-align: center; width: 100%; border: none; cursor: pointer; }
+        .btn-primary:hover { background: #005bb5; }
+        .form-footer { text-align: center; margin-top: 15px; font-size: 0.95rem; }
+        .form-footer a { color: #007aff; font-weight: 600; }
+        footer { background: #0b2d5a; color: white; padding: 40px 6%; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><span style="color: #0000ff;">CareBot</span></div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="case.html">Case Studies</a>
+            <a href="doctor.html">Doctor Chat</a>
+            <a href="symptom-checker.html">Symptom Checker</a>
+        </nav>
+        <div class="header-btns">
+            <a href="login.html" class="login">LOG IN</a>
+            <a href="signup.html" class="cta">Sign Up</a>
+        </div>
+    </header>
+
+    <section class="signup-section">
+        <div class="signup-card">
+            <h2>Create your CareBot Account</h2>
+            <form onsubmit="registerUser(event)">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required />
+                </div>
+                <div class="form-group">
+                    <label for="confirm">Confirm Password</label>
+                    <input type="password" id="confirm" required />
+                </div>
+                <button type="submit" class="btn-primary">Sign Up</button>
+                <div class="form-footer">Already have an account? <a href="login.html">Log In</a></div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p style="text-align:center;">©2025 CareBot. All rights reserved.</p>
+    </footer>
+
+    <script>
+    async function registerUser(e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirm = document.getElementById("confirm").value;
+
+        if (password !== confirm) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        try {
+            const res = await fetch("http://127.0.0.1:8000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(data.message);
+                window.location.href = "login.html";
+            } else {
+                alert(data.detail || "Signup failed");
+            }
+        } catch (err) {
+            alert("Error connecting to server");
+        }
+    }
+    </script>
+</body>
+</html>

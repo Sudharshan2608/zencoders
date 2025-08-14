@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareBot - Symptom Checker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="pics/cletter.png" />
+    <style>
+        /* = Import baseline styling from homepage = */
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            background: #fff;
+            color: #111;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #007aff;
+            user-select: none;
+        }
+        .logo span {
+            font-weight: 300;
+            color: #333;
+        }
+        nav a {
+            margin: 0 20px;
+            font-weight: 600;
+            color: #444;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #007aff;
+        }
+        .header-btns a {
+            margin-left: 20px;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .login {
+            color: #007aff;
+            border: 2px solid #007aff;
+            background: transparent;
+        }
+        .login:hover {
+            background: #007aff;
+            color: white;
+        }
+        .cta {
+            background: #007aff;
+            color: #fff;
+            border: none;
+        }
+        .cta:hover {
+            background: #005bb5;
+        }
+        /* Main Section */
+        .checker-section {
+            padding: 60px 6%;
+            background: #f4f8ff;
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .checker-card {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+            /* Removed inner scrollbar */
+        }
+        .checker-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #071c4d;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group-inline {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        label {
+            font-weight: 600;
+            color: #003974;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"],
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        textarea {
+            height: 100px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 25px;
+        }
+        .checkbox-group label {
+            font-weight: 500;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        button.btn-primary {
+            background: #007aff;
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button.btn-primary:hover {
+            background: #005bb5;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #eef5ff;
+            color: #003974;
+            display: none;
+            white-space: pre-wrap;
+        }
+        /* Footer */
+        footer {
+            background: #0b2d5a;
+            color: white;
+            padding: 40px 6%;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #a2b7ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo"><span style="color: #0000ff;">CareBot</span></div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="case.html">Case Studies</a>
+            <a href="doctor.html">Doctor Chat</a>
+        </nav>
+        <div class="header-btns">
+            <a href="login.html" class="login">Login</a>
+            <a href="signup.html" class="cta">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Symptom Checker Form -->
+    <section class="checker-section">
+        <div class="checker-card">
+            <h2>Symptom Checker</h2>
+            <p>Enter detailed information below to help our AI provide better triage recommendations. (This tool does not replace medical advice.)</p>
+
+            <div class="form-group">
+                <label for="age">Your Age:</label>
+                <input type="number" id="age" min="0" max="120" placeholder="Enter your age (years)" />
+            </div>
+
+            <div class="form-group">
+                <label>Do you have any of the following symptoms? (Check all that apply):</label>
+                <div class="checkbox-group" id="symptom-checkboxes">
+                    <label><input type="checkbox" name="symptoms" value="fever" /> Fever</label>
+                    <label><input type="checkbox" name="symptoms" value="cough" /> Cough</label>
+                    <label><input type="checkbox" name="symptoms" value="chest pain" /> Chest Pain</label>
+                    <label><input type="checkbox" name="symptoms" value="shortness of breath" /> Shortness of Breath</label>
+                    <label><input type="checkbox" name="symptoms" value="headache" /> Headache</label>
+                    <label><input type="checkbox" name="symptoms" value="rash" /> Rash</label>
+                    <label><input type="checkbox" name="symptoms" value="vomiting" /> Vomiting</label>
+                    <label><input type="checkbox" name="symptoms" value="diarrhea" /> Diarrhea</label>
+                    <label><input type="checkbox" name="symptoms" value="abdominal pain" /> Abdominal Pain</label>
+                    <label><input type="checkbox" name="symptoms" value="sore throat" /> Sore Throat</label>
+                    <label><input type="checkbox" name="symptoms" value="weakness" /> Weakness</label>
+                    <label><input type="checkbox" name="symptoms" value="dizziness" /> Dizziness</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="symptomDuration">Symptom Duration (days):</label>
+                <input type="number" id="symptomDuration" min="0" max="365" placeholder="Number of days you've had symptoms" />
+            </div>
+
+            <div class="form-group">
+                <label for="severity">How severe are your symptoms?</label>
+                <select id="severity">
+                    <option value="">Select severity</option>
+                    <option value="mild">Mild</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="severe">Severe</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Have you been exposed recently to someone with contagious illness?</label>
+                <select id="exposure">
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="unknown">Not sure</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Do you have any of these pre-existing conditions? (Check all that apply)</label>
+                <div class="checkbox-group" id="conditions-checkboxes">
+                    <label><input type="checkbox" name="conditions" value="diabetes" /> Diabetes</label>
+                    <label><input type="checkbox" name="conditions" value="heart disease" /> Heart Disease</label>
+                    <label><input type="checkbox" name="conditions" value="respiratory issues" /> Respiratory Issues (e.g. asthma, COPD)</label>
+                    <label><input type="checkbox" name="conditions" value="immunocompromised" /> Immunocompromised</label>
+                    <label><input type="checkbox" name="conditions" value="none" /> None</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="medications">Current Medications (optional):</label>
+                <textarea id="medications" placeholder="List any medications you are currently taking"></textarea>
+            </div>
+
+            <div class="form-group-inline">
+                <div style="flex: 1;">
+                    <label for="temperature">Temperature (°C):</label>
+                    <input type="number" id="temperature" min="30" max="45" step="0.1" placeholder="e.g. 37.5" />
+                </div>
+                <div style="flex: 1;">
+                    <label for="oxygen">Oxygen Saturation (%):</label>
+                    <input type="number" id="oxygen" min="50" max="100" placeholder="e.g. 98" />
+                </div>
+                <div style="flex: 1;">
+                    <label for="heartRate">Heart Rate (bpm):</label>
+                    <input type="number" id="heartRate" min="30" max="220" placeholder="e.g. 80" />
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="submitSymptoms()">Check</button>
+
+            <div id="result" class="result-box"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-note">©2025 CareBot. All rights reserved.</p>
+    </footer>
+
+    <script>
+    async function submitSymptoms() {
+        const age = document.getElementById('age').value;
+        const symptomCheckboxes = document.querySelectorAll('input[name="symptoms"]:checked');
+        const symptomDuration = document.getElementById('symptomDuration').value;
+        const severity = document.getElementById('severity').value;
+        const exposure = document.getElementById('exposure').value;
+        const conditionCheckboxes = document.querySelectorAll('input[name="conditions"]:checked');
+        const medications = document.getElementById('medications').value.trim();
+        const temperature = document.getElementById('temperature').value;
+        const oxygen = document.getElementById('oxygen').value;
+        const heartRate = document.getElementById('heartRate').value;
+        const resultBox = document.getElementById('result');
+
+        if (!age || symptomCheckboxes.length === 0 || !symptomDuration || !severity || !exposure) {
+            alert('Please fill in your age, select at least one symptom, symptom duration, severity, and exposure status.');
+            return;
+        }
+
+        const symptoms = Array.from(symptomCheckboxes).map(cb => cb.value);
+        const conditions = Array.from(conditionCheckboxes).map(cb => cb.value);
+
+        if (conditions.includes('none') && conditions.length > 1) {
+            conditions.splice(0, conditions.length, 'none');
+        }
+
+        const payload = {
+            age: parseInt(age),
+            symptoms: symptoms,
+            symptom_duration_days: parseInt(symptomDuration),
+            severity,
+            recent_exposure: exposure,
+            pre_existing_conditions: conditions,
+            medications,
+            temperature: temperature ? parseFloat(temperature) : null,
+            oxygen_saturation: oxygen ? parseInt(oxygen) : null,
+            heart_rate: heartRate ? parseInt(heartRate) : null,
+        };
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/triage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error('Server error');
+            const data = await response.json();
+
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `<strong>Urgency:</strong> ${data.urgency}<br>
+                                   <strong>Reason:</strong> ${data.reason}<br>
+                                   <em>${data.disclaimer}</em>`;
+        } catch (error) {
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `<span style="color:red;">Error:</span> Could not get response from AI Triage system.`;
+        }
+    }
+</script>
+</body>
+</html>
